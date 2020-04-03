@@ -6,9 +6,9 @@ package Java.Game;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
-public class AppTest {
+public class MainTest {
     @Test public void testAppHasAGreeting() {
-        App classUnderTest = new App();
-        assertNotNull("app should have a greeting", classUnderTest.getGreeting());
+        Main classUnderTest = new Main();
+        System.out.println("Executing Program...");
     }
 }
