@@ -18,6 +18,8 @@ public class Player extends Rectangle {
         yVelocity = 0;
         xAcceleration = 0;
         yAcceleration = 0;
+
+        setViewOrder(5);
     }
 
     public void checkInputs(ArrayList<String> inputs) {
@@ -78,6 +80,8 @@ public class Player extends Rectangle {
     }
 
     public void render() {
+        update();
+
         setTranslateX(xOffset);
         setTranslateY(yOffset);
     }

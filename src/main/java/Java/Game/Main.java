@@ -2,7 +2,8 @@ package Java.Game;
 
 import java.util.ArrayList;
 
-import Java.Game.GameObjects.*;
+import Java.Game.GameObjects.Background.*;
+import Java.Game.GameObjects.Player;
 import Java.Game.UI.ConfirmationBox;
 import javafx.scene.paint.Color;
 import javafx.animation.AnimationTimer;
@@ -17,8 +18,11 @@ public class Main extends Application {
 
     private Pane layout;
     private Scene scene;
-    ArrayList<String> inputs;
+    public ArrayList<String> inputs;
     private Player player;
+    private GameBackground background;
+    private LeftWall leftWall;
+    private RightWall rightWall;
 
     public static void main(String[] args) {
         launch(args);
@@ -28,6 +32,9 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         
         // Creating Game Objects
+        background = new GameBackground(0, 0, Color.WHITE);
+        leftWall = new LeftWall(0, 0, Color.DARKGRAY);
+        rightWall = new RightWall(0, 0, Color.DARKGRAY);
         player = new Player(100, 100, 40, 40, Color.BLUE);
 
         // Initial setup
@@ -37,7 +44,7 @@ public class Main extends Application {
             closeProgram(primaryStage);
         });
         layout = new Pane();
-        layout.getChildren().addAll(player);
+        layout.getChildren().addAll(player, background, leftWall, rightWall);
         scene = new Scene(layout, 300, 300);
         primaryStage.setScene(scene);
 
@@ -64,8 +71,10 @@ public class Main extends Application {
         
             @Override
             public void handle(long currentNanoTime) {
+                background.render(scene.getWidth(), scene.getHeight());
+                leftWall.render(scene.getWidth() / 20, scene.getHeight());
+                rightWall.render(scene.getWidth() / 20, scene.getHeight());
                 player.checkInputs(inputs);
-                player.update();
                 player.render();
             }
         }.start();
