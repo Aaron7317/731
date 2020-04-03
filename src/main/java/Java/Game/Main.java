@@ -2,7 +2,7 @@ package Java.Game;
 
 import java.util.ArrayList;
 
-import Java.Game.Sprites.Player;
+import Java.Game.GameObjects.*;
 import Java.Game.UI.ConfirmationBox;
 import javafx.scene.paint.Color;
 import javafx.animation.AnimationTimer;

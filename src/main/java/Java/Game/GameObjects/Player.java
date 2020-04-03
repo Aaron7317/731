@@ -1,4 +1,4 @@
-package Java.Game.Sprites;
+package Java.Game.GameObjects;
 
 import java.util.ArrayList;
 
