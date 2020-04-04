@@ -13,6 +13,8 @@ import javafx.stage.*;
 import javafx.scene.*;
 import javafx.scene.layout.*;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCombination;
 
 public class Main extends Application {
 
@@ -35,18 +37,23 @@ public class Main extends Application {
         background = new GameBackground(0, 0, Color.WHITE);
         leftWall = new LeftWall(0, 0, Color.DARKGRAY);
         rightWall = new RightWall(0, 0, Color.DARKGRAY);
-        player = new Player(100, 100, 40, 40, Color.BLUE);
+        player = new Player(0, 0, 40, 40, Color.BLUE);
 
         // Initial setup
-        primaryStage.setTitle("JavaFX Game");
+        primaryStage.setTitle("731");
+        primaryStage.setResizable(false);
+        primaryStage.setMaximized(true);
+        System.out.println();
+        // TODO: find a way to force full screen while making it easy to close the application
         primaryStage.setOnCloseRequest(e -> {
             e.consume();
             closeProgram(primaryStage);
         });
         layout = new Pane();
         layout.getChildren().addAll(player, background, leftWall, rightWall);
-        scene = new Scene(layout, 300, 300);
+        scene = new Scene(layout);
         primaryStage.setScene(scene);
+        
 
         // Getting User Input
         inputs = new ArrayList<String>();
@@ -71,17 +78,18 @@ public class Main extends Application {
         
             @Override
             public void handle(long currentNanoTime) {
+                player.checkInputs(inputs);
                 background.render(scene.getWidth(), scene.getHeight());
                 leftWall.render(scene.getWidth() / 20, scene.getHeight());
                 rightWall.render(scene.getWidth() / 20, scene.getHeight());
-                player.checkInputs(inputs);
                 player.render();
             }
         }.start();
         
-        // * USE SCENE INSTEAD OF STAGE FOR SIZE REFERENCING
 
         primaryStage.show();
+        primaryStage.setMinWidth(primaryStage.getWidth());
+        primaryStage.setMinHeight(primaryStage.getHeight());
     }
 
 
