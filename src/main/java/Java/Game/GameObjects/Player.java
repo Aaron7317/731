@@ -67,6 +67,11 @@ public class Player extends Rectangle {
         }
     }
 
+    public void gotoPosition(double x, double y) {
+        xOffset = x;
+        yOffset = y;
+    }
+
     public void update() {
 
         // Calculates velocity and updates the player's position

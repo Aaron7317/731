@@ -1,5 +1,7 @@
 package Java.Game.GameObjects.Entities;
 
-public class Enemy {
+import javafx.scene.shape.Rectangle;
+
+public class Enemy extends Rectangle {
 
 }

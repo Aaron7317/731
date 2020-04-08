@@ -70,7 +70,11 @@ public class Main extends Application {
         });
 
         // Any Additional Setup Required Before Running Game Loop
-        
+        primaryStage.show();
+        primaryStage.setMinWidth(primaryStage.getWidth());
+        primaryStage.setMinHeight(primaryStage.getHeight());
+
+        player.gotoPosition(primaryStage.getWidth() / 2, primaryStage.getHeight() - 200);
 
         // Game Loop
         final long startTime = System.nanoTime();
@@ -86,10 +90,6 @@ public class Main extends Application {
             }
         }.start();
         
-
-        primaryStage.show();
-        primaryStage.setMinWidth(primaryStage.getWidth());
-        primaryStage.setMinHeight(primaryStage.getHeight());
     }
 
 
