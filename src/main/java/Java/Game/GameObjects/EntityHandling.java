@@ -8,4 +8,8 @@ public class EntityHandling {
 
     private static ArrayList<Enemy> enemies;
 
+
+    public static void generateWave(int difficulty) {
+        
+    }
 }

@@ -25,6 +25,7 @@ public class Main extends Application {
     private GameBackground background;
     private LeftWall leftWall;
     private RightWall rightWall;
+    private double rightBounds, leftBounds, wallThickness;
 
     public static void main(String[] args) {
         launch(args);
@@ -43,8 +44,6 @@ public class Main extends Application {
         primaryStage.setTitle("731");
         primaryStage.setResizable(false);
         primaryStage.setMaximized(true);
-        System.out.println();
-        // TODO: find a way to force full screen while making it easy to close the application
         primaryStage.setOnCloseRequest(e -> {
             e.consume();
             closeProgram(primaryStage);
@@ -74,7 +73,24 @@ public class Main extends Application {
         primaryStage.setMinWidth(primaryStage.getWidth());
         primaryStage.setMinHeight(primaryStage.getHeight());
 
-        player.gotoPosition(primaryStage.getWidth() / 2, primaryStage.getHeight() - 200);
+        player.gotoPosition(scene.getWidth() / 2, scene.getHeight() - 200);
+        player.setWidth(scene.getWidth() / 40);
+        player.setHeight(scene.getWidth() / 40);
+
+        wallThickness = scene.getWidth() / 20;
+        leftBounds = scene.getWidth() / 20;
+        rightBounds = scene.getWidth() - scene.getWidth() / 20;
+        player.setBounds(leftBounds, rightBounds);
+
+        leftWall.setWidth(wallThickness);
+        leftWall.setHeight(scene.getHeight());
+        rightWall.setTranslateX(rightBounds);
+        rightWall.setWidth(wallThickness);
+        rightWall.setHeight(scene.getHeight());
+        background.setWidth(scene.getWidth());
+        background.setHeight(scene.getHeight());
+
+        
 
         // Game Loop
         final long startTime = System.nanoTime();
@@ -83,10 +99,9 @@ public class Main extends Application {
             @Override
             public void handle(long currentNanoTime) {
                 player.checkInputs(inputs);
-                background.render(scene.getWidth(), scene.getHeight());
-                leftWall.render(scene.getWidth() / 20, scene.getHeight());
-                rightWall.render(scene.getWidth() / 20, scene.getHeight());
+                
                 player.render();
+                System.out.println(player.getYOffset());
             }
         }.start();
         

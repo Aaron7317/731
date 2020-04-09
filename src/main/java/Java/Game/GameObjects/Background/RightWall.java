@@ -14,9 +14,4 @@ public class RightWall extends Rectangle {
         setViewOrder(9);
     }
 
-    public void render(double width, double height) {
-        setTranslateX((width * 20) - width);
-        setWidth(width);
-        setHeight(height);
-    }
 }

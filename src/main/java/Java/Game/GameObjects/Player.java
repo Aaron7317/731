@@ -7,7 +7,8 @@ import javafx.scene.shape.Rectangle;
 
 public class Player extends Rectangle {
     
-    private double xVelocity, yVelocity, xAcceleration, yAcceleration, xOffset, yOffset;
+    private double xVelocity, yVelocity, xAcceleration, yAcceleration, xOffset, yOffset, leftBounds, rightBounds;
+    private boolean safe;
 
     public Player(double x, double y, int width, int height, Color color) {
         super(width, height, color);
@@ -18,6 +19,10 @@ public class Player extends Rectangle {
         yVelocity = 0;
         xAcceleration = 0;
         yAcceleration = 0;
+        leftBounds = 0;
+        rightBounds = 0;
+
+        safe = false;
 
         setViewOrder(5);
     }
@@ -72,20 +77,31 @@ public class Player extends Rectangle {
         yOffset = y;
     }
 
-    public void update() {
+    public void setBounds(double left, double right) {
+        leftBounds = left;
+        rightBounds = right;
+    }
 
-        // Calculates velocity and updates the player's position
+    public void render() {
+        
         yVelocity += yAcceleration;
         xVelocity += xAcceleration;
         yVelocity *= 0.95;
         xVelocity *= 0.95;
+
+        if (xOffset <= leftBounds) {
+            xVelocity = Math.abs(xVelocity);
+            xVelocity *= 0.5;
+        }
+        if (xOffset >= rightBounds - getWidth()) {
+            xVelocity = -Math.abs(xVelocity);
+            xVelocity *= 0.5;
+        }
+
         yOffset += yVelocity; 
         xOffset += xVelocity;
 
-    }
-
-    public void render() {
-        update();
+        
 
         setTranslateX(xOffset);
         setTranslateY(yOffset);

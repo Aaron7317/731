@@ -14,8 +14,4 @@ public class LeftWall extends Rectangle {
         setViewOrder(9);
     }
 
-    public void render(double width, double height) {
-        setWidth(width);
-        setHeight(height);
-    }
 }

@@ -14,8 +14,4 @@ public class GameBackground extends Rectangle {
         setViewOrder(10);
     }
 
-    public void render(double width, double height) {
-        setWidth(width);
-        setHeight(height);
-    }
 }
