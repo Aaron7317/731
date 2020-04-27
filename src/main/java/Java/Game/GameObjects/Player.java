@@ -25,6 +25,8 @@ public class Player extends Rectangle {
         safe = false;
 
         setViewOrder(5);
+
+        
     }
 
     public void checkInputs(ArrayList<String> inputs) {
@@ -74,7 +76,8 @@ public class Player extends Rectangle {
 
     public void gotoPosition(double x, double y) {
         xOffset = x;
-        yOffset = y;
+        yOffset = 0;
+        setTranslateY(y);
     }
 
     public void setBounds(double left, double right) {
@@ -104,7 +107,6 @@ public class Player extends Rectangle {
         
 
         setTranslateX(xOffset);
-        setTranslateY(yOffset);
     }
 
     public double getYOffset() {

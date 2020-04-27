@@ -7,7 +7,7 @@ public class Enemy extends Rectangle {
 
     private double xOffset, yOffset, speed;
 
-    public Enemy(int x, int y, int width, int height, Color color, double speed) {
+    public Enemy(double x, double y, int width, int height, Color color, double speed) {
         super(width, height, color);
 
         xOffset = x;
@@ -17,7 +17,12 @@ public class Enemy extends Rectangle {
         setTranslateX(xOffset);
     }
 
-    public void render() {
-        
+    public void render(double playerY, double sceneHeight) {
+        if(yOffset - playerY < sceneHeight + 20 && yOffset - playerY > -getHeight() - 10) {
+            setTranslateY(yOffset - playerY);
+            setTranslateX(xOffset);
+        }
     }
+
+    
 }

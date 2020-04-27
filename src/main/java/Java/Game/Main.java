@@ -3,7 +3,8 @@ package Java.Game;
 import java.util.ArrayList;
 
 import Java.Game.GameObjects.Background.*;
-import Java.Game.GameObjects.Player;
+import Java.Game.GameObjects.Entities.Enemy;
+import Java.Game.GameObjects.*;
 import Java.Game.UI.ConfirmationBox;
 import javafx.scene.paint.Color;
 import javafx.animation.AnimationTimer;
@@ -26,6 +27,8 @@ public class Main extends Application {
     private LeftWall leftWall;
     private RightWall rightWall;
     private double rightBounds, leftBounds, wallThickness;
+    ArrayList<Enemy> enemies;
+
 
     public static void main(String[] args) {
         launch(args);
@@ -40,6 +43,8 @@ public class Main extends Application {
         rightWall = new RightWall(0, 0, Color.DARKGRAY);
         player = new Player(0, 0, 40, 40, Color.BLUE);
 
+        enemies = new ArrayList<>();
+        
         // Initial setup
         primaryStage.setTitle("731");
         primaryStage.setResizable(false);
@@ -49,10 +54,11 @@ public class Main extends Application {
             closeProgram(primaryStage);
         });
         layout = new Pane();
+
         layout.getChildren().addAll(player, background, leftWall, rightWall);
+
         scene = new Scene(layout);
         primaryStage.setScene(scene);
-        
 
         // Getting User Input
         inputs = new ArrayList<String>();
@@ -73,7 +79,7 @@ public class Main extends Application {
         primaryStage.setMinWidth(primaryStage.getWidth());
         primaryStage.setMinHeight(primaryStage.getHeight());
 
-        player.gotoPosition(scene.getWidth() / 2, scene.getHeight() - 200);
+        player.gotoPosition(scene.getWidth() / 2, scene.getHeight() / 2);
         player.setWidth(scene.getWidth() / 40);
         player.setHeight(scene.getWidth() / 40);
 
@@ -90,7 +96,7 @@ public class Main extends Application {
         background.setWidth(scene.getWidth());
         background.setHeight(scene.getHeight());
 
-        
+        ImplementEnemy(scene.getWidth(), scene.getHeight(), player.getYOffset());
 
         // Game Loop
         final long startTime = System.nanoTime();
@@ -101,7 +107,10 @@ public class Main extends Application {
                 player.checkInputs(inputs);
                 
                 player.render();
-                System.out.println(player.getYOffset());
+                for (int i = 0; i < enemies.size(); i++) {
+                    enemies.get(i).render(player.getYOffset(), scene.getHeight());
+                }
+
             }
         }.start();
         
@@ -115,5 +124,23 @@ public class Main extends Application {
         }
     }
 
-    
+    private Enemy generateEnemy(double sceneWidth, double sceneHeight, double playerY) {
+        return new Enemy(Math.random() * sceneWidth, playerY + (sceneHeight / 2) + (Math.random() * 200), 40, 40, Color.RED, 0);
+    }
+
+    private void ImplementEnemy(double sceneWidth, double sceneHeight, double playerY) {
+        enemies.add(generateEnemy(sceneWidth, sceneHeight, playerY));
+        layout.getChildren().add(enemies.get(enemies.size() - 1));
+    }
+
+    private void deleteEnemy(int enemyIndex) {
+        
+    }
+
+    private void deleteAllEnemies(int enemyAmout) {
+        for (int i = 0; i < enemyAmout; i++) {
+            deleteEnemy(i);
+        }
+    }
+
 }
