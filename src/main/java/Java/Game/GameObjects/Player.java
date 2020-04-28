@@ -100,6 +100,9 @@ public class Player extends Rectangle {
             xVelocity = -Math.abs(xVelocity);
             xVelocity *= 0.5;
         }
+        if (Math.abs(yVelocity) < 0.02) {
+            yVelocity = 0;
+        }
 
         yOffset += yVelocity; 
         xOffset += xVelocity;
@@ -115,6 +118,10 @@ public class Player extends Rectangle {
 
     public double getXOffset() {
         return xOffset;
+    }
+
+    public double getYVelocity() {
+        return yVelocity;
     }
 
 }

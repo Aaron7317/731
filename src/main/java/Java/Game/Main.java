@@ -96,7 +96,8 @@ public class Main extends Application {
         background.setWidth(scene.getWidth());
         background.setHeight(scene.getHeight());
 
-        ImplementEnemy(scene.getWidth(), scene.getHeight(), player.getYOffset());
+        //implementEnemy(scene.getWidth(), scene.getHeight(), player.getYOffset());
+        generateWave(1);
 
         // Game Loop
         final long startTime = System.nanoTime();
@@ -108,8 +109,9 @@ public class Main extends Application {
                 
                 player.render();
                 for (int i = 0; i < enemies.size(); i++) {
-                    enemies.get(i).render(player.getYOffset(), scene.getHeight());
+                    enemies.get(i).render(player.getYOffset(), scene.getHeight(), player.getYVelocity());
                 }
+
 
             }
         }.start();
@@ -124,22 +126,31 @@ public class Main extends Application {
         }
     }
 
+    // * Enemy Generation
+
     private Enemy generateEnemy(double sceneWidth, double sceneHeight, double playerY) {
-        return new Enemy(Math.random() * sceneWidth, playerY + (sceneHeight / 2) + (Math.random() * 200), 40, 40, Color.RED, 0);
+        return new Enemy(Math.random() * sceneWidth, playerY - (Math.random() * 200) - (sceneHeight / 2), 40, 40, Color.RED, 0, player.getYOffset());
     }
 
-    private void ImplementEnemy(double sceneWidth, double sceneHeight, double playerY) {
+    private void implementEnemy(double sceneWidth, double sceneHeight, double playerY) {
         enemies.add(generateEnemy(sceneWidth, sceneHeight, playerY));
         layout.getChildren().add(enemies.get(enemies.size() - 1));
     }
 
     private void deleteEnemy(int enemyIndex) {
-        
+        layout.getChildren().remove(enemies.get(enemyIndex));
+        enemies.remove(enemyIndex);
     }
 
     private void deleteAllEnemies(int enemyAmout) {
         for (int i = 0; i < enemyAmout; i++) {
             deleteEnemy(i);
+        }
+    }
+
+    private void generateWave(int difficultyModifier) {
+        for (int i = 0; i < difficultyModifier; i++) {
+            implementEnemy(scene.getWidth(), scene.getHeight(), player.getYOffset());
         }
     }
 
