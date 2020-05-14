@@ -28,7 +28,8 @@ public class Main extends Application {
     private RightWall rightWall;
     private double rightBounds, leftBounds, wallThickness;
     ArrayList<Enemy> enemies;
-
+    private int currentDistance, lastMilestone;
+    // Milestones will help determine when to generate enemies
 
     public static void main(String[] args) {
         launch(args);
@@ -96,7 +97,7 @@ public class Main extends Application {
         background.setWidth(scene.getWidth());
         background.setHeight(scene.getHeight());
 
-        //implementEnemy(scene.getWidth(), scene.getHeight(), player.getYOffset());
+        
         generateWave(1);
 
         // Game Loop
@@ -106,11 +107,13 @@ public class Main extends Application {
             @Override
             public void handle(long currentNanoTime) {
                 player.checkInputs(inputs);
+                currentDistance = -(int)player.getYOffset();
                 
                 player.render();
                 for (int i = 0; i < enemies.size(); i++) {
                     enemies.get(i).render(player.getYOffset(), scene.getHeight(), player.getYVelocity());
                 }
+
 
 
             }
@@ -120,8 +123,7 @@ public class Main extends Application {
 
 
     private void closeProgram(Stage window) {
-        boolean result = ConfirmationBox.display("Close", "Are you sure you would like to exit the program?");
-        if (result) {
+        if (ConfirmationBox.display("Close", "Are you sure you would like to exit the program?")) {
             window.close();
         }
     }

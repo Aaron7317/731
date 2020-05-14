@@ -84,7 +84,7 @@ public class Player extends Rectangle {
         leftBounds = left;
         rightBounds = right;
     }
-
+    
     public void render() {
         
         yVelocity += yAcceleration;
