@@ -98,7 +98,7 @@ public class Main extends Application {
         background.setHeight(scene.getHeight());
 
         
-        generateWave(1);
+        generateWave(5);
 
         // Game Loop
         final long startTime = System.nanoTime();
@@ -109,9 +109,9 @@ public class Main extends Application {
                 player.checkInputs(inputs);
                 currentDistance = -(int)player.getYOffset();
                 
-                player.render();
+                player.move();
                 for (int i = 0; i < enemies.size(); i++) {
-                    enemies.get(i).render(player.getYOffset(), scene.getHeight(), player.getYVelocity());
+                    enemies.get(i).move(player.getYOffset(), player.getXOffset(), scene.getHeight());
                 }
 
 
@@ -152,7 +152,7 @@ public class Main extends Application {
 
     private void generateWave(int difficultyModifier) {
         for (int i = 0; i < difficultyModifier; i++) {
-            implementEnemy(scene.getWidth(), scene.getHeight(), player.getYOffset());
+            implementEnemy(scene.getWidth(), scene.getHeight(), player.getYOffset() + Math.random() * -1000);
         }
     }
 

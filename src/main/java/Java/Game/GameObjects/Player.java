@@ -74,6 +74,10 @@ public class Player extends Rectangle {
         }
     }
 
+    private void render() {
+        setTranslateX(xOffset);
+    }
+
     public void gotoPosition(double x, double y) {
         xOffset = x;
         yOffset = 0;
@@ -85,7 +89,7 @@ public class Player extends Rectangle {
         rightBounds = right;
     }
     
-    public void render() {
+    public void move() {
         
         yVelocity += yAcceleration;
         xVelocity += xAcceleration;
@@ -107,9 +111,7 @@ public class Player extends Rectangle {
         yOffset += yVelocity; 
         xOffset += xVelocity;
 
-        
-
-        setTranslateX(xOffset);
+        render();
     }
 
     public double getYOffset() {
