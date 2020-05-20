@@ -26,10 +26,10 @@ public class Main extends Application {
     private GameBackground background;
     private LeftWall leftWall;
     private RightWall rightWall;
-    private double rightBounds, leftBounds, wallThickness;
+    private double rightBounds, leftBounds, wallThickness, waveCheckpointDistance;
     ArrayList<Enemy> enemies;
-    private int currentDistance, lastMilestone;
-    // Milestones will help determine when to generate enemies
+    private int currentDifficultyModifier;
+
 
     public static void main(String[] args) {
         launch(args);
@@ -97,8 +97,8 @@ public class Main extends Application {
         background.setWidth(scene.getWidth());
         background.setHeight(scene.getHeight());
 
-        
-        generateWave(5);
+        waveCheckpointDistance = 0;
+        currentDifficultyModifier = 0;
 
         // Game Loop
         final long startTime = System.nanoTime();
@@ -107,14 +107,22 @@ public class Main extends Application {
             @Override
             public void handle(long currentNanoTime) {
                 player.checkInputs(inputs);
-                currentDistance = -(int)player.getYOffset();
                 
                 player.move();
                 for (int i = 0; i < enemies.size(); i++) {
+                    
                     enemies.get(i).move(player.getYOffset(), player.getXOffset(), scene.getHeight());
+                    
+                    if(enemies.get(i).getYOffset() - player.getYOffset() > scene.getHeight() / 2) {
+                        deleteEnemy(i);
+                    }
                 }
 
-
+                if (player.getYOffset() < waveCheckpointDistance) {
+                    waveCheckpointDistance -= 2000;
+                    currentDifficultyModifier += 1;
+                    generateWave(currentDifficultyModifier);
+                }
 
             }
         }.start();

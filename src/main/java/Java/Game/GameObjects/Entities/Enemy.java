@@ -59,5 +59,8 @@ public class Enemy extends Rectangle {
         }
     }
 
+    public double getYOffset() {
+        return yOffset;
+    }
     
 }
