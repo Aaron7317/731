@@ -124,6 +124,11 @@ public class Main extends Application {
                     generateWave(currentDifficultyModifier);
                 }
 
+                if (checkForCollisions()) {
+                    reset(enemies.size());
+                    System.out.println(player.getYOffset());
+                }
+
             }
         }.start();
         
@@ -154,14 +159,33 @@ public class Main extends Application {
 
     private void deleteAllEnemies(int enemyAmout) {
         for (int i = 0; i < enemyAmout; i++) {
-            deleteEnemy(i);
+            layout.getChildren().remove(enemies.get(i));
         }
+        enemies.clear();
+    }
+
+    private void reset(int enemyAmout) {
+        deleteAllEnemies(enemyAmout);
+        waveCheckpointDistance = 0;
+        currentDifficultyModifier = 0;
+        player.setYOffset(0);
     }
 
     private void generateWave(int difficultyModifier) {
         for (int i = 0; i < difficultyModifier; i++) {
             implementEnemy(scene.getWidth(), scene.getHeight(), player.getYOffset() + Math.random() * -1000);
         }
+    }
+
+    private boolean checkForCollisions() {
+        for (int i = 0; i < enemies.size(); i++) {
+            if (Math.abs(player.getXOffset() - enemies.get(i).getXOffset()) < player.getWidth()) {
+                if (Math.abs(player.getYOffset() - enemies.get(i).getYOffset()) < player.getHeight()) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 }

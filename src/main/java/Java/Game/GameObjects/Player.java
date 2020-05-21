@@ -126,4 +126,8 @@ public class Player extends Rectangle {
         return yVelocity;
     }
 
+    public void setYOffset(double y) {
+        yOffset = y;
+    }
+
 }
