@@ -107,8 +107,8 @@ public class Main extends Application {
             @Override
             public void handle(long currentNanoTime) {
                 player.checkInputs(inputs);
-                
                 player.move();
+
                 for (int i = 0; i < enemies.size(); i++) {
                     
                     enemies.get(i).move(player.getYOffset(), player.getXOffset(), scene.getHeight());
@@ -152,6 +152,12 @@ public class Main extends Application {
         layout.getChildren().add(enemies.get(enemies.size() - 1));
     }
 
+    private void generateWave(int difficultyModifier) {
+        for (int i = 0; i < difficultyModifier; i++) {
+            implementEnemy(scene.getWidth(), scene.getHeight(), player.getYOffset() + Math.random() * -1000);
+        }
+    }
+
     private void deleteEnemy(int enemyIndex) {
         layout.getChildren().remove(enemies.get(enemyIndex));
         enemies.remove(enemyIndex);
@@ -169,12 +175,6 @@ public class Main extends Application {
         waveCheckpointDistance = 0;
         currentDifficultyModifier = 0;
         player.setYOffset(0);
-    }
-
-    private void generateWave(int difficultyModifier) {
-        for (int i = 0; i < difficultyModifier; i++) {
-            implementEnemy(scene.getWidth(), scene.getHeight(), player.getYOffset() + Math.random() * -1000);
-        }
     }
 
     private boolean checkForCollisions() {
