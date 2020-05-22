@@ -153,6 +153,9 @@ public class Main extends Application {
     }
 
     private void generateWave(int difficultyModifier) {
+        if (difficultyModifier <= 0) {
+            System.out.println("Invalid Wave Input");
+        }
         for (int i = 0; i < difficultyModifier; i++) {
             implementEnemy(scene.getWidth(), scene.getHeight(), player.getYOffset() + Math.random() * -1000);
         }
